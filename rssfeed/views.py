@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
-# from .models import News
+from .models import Headlines
 from datetime import datetime
 import feedparser
 
@@ -40,7 +40,6 @@ def news_sources(request):
 def newsList(request):
 
     desired_rss_feed = request.GET.get('id', "1")
-    print("went in" + desired_rss_feed)
     if desired_rss_feed not in RSS_FEEDS:
         desired_rss_feed = "1"
 
@@ -52,6 +51,12 @@ def newsList(request):
         {"title": entry["title"], "link": entry["link"]}
         for entry in feed["entries"]
     ]
+
+
+    for headline in headlines:
+        new_headline = Headlines(title=headline['title'], link=headline['link'], time_added=str(datetime.now()))
+        new_headline.save()
+
 
     visited_at = request.COOKIES.get("visited_at")
 
