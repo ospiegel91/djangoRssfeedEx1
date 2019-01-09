@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>news list</title>
+
+    </head>
+    <body>
+
+        <ul>
+            {% for headline in headlines %}
+                <li><a href={{ headline.link }}>{{ headline.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+    </body>
+</html>
